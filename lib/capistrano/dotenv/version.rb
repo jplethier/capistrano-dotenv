@@ -3,6 +3,6 @@ module Capistrano
   # Dotenv
   module Dotenv
     # Gem version
-    VERSION = '2.2.0'
+    VERSION = '0.0.1'
   end
 end
