@@ -1,0 +1,68 @@
+require 'env_extractor'
+
+namespace :dotenv do
+  task :check do
+    env_vars = fetch(:env_vars)
+
+    OPTIONAL_VARS = %w(SEGMENT_KEY GTM_CODE RAILS_SERVE_STATIC_FILES ASSETS_VERSION)
+    IGNORED_VARS = %w(BUNDLE_GEMFILE DB_REAPING_FREQUENCY CI CIRCLE_ARTIFACTS COVERAGE FB_SECRET)
+
+    missing_vars = []
+    optional_vars = []
+    EnvExtractor.extract_env_vars.each do |ocurrence|
+      next if env_vars.include?(ocurrence[0])
+      next if IGNORED_VARS.include?(ocurrence[0])
+
+      if OPTIONAL_VARS.include?(ocurrence[0])
+        optional_vars << ocurrence[0]
+      else
+        missing_vars << ocurrence[0]
+      end
+    end
+
+    fail "You must set a value for env vars:\n#{missing_vars.join("\n")}" if missing_vars.size > 0
+
+    if optional_vars.size > 0
+      puts "You have optional env vars that is not defined:\n#{optional_vars.join("\n")}"
+      ask(:continue, "Continue?(Yn)")
+      continue = fetch(:continue)
+
+      fail 'User abort for missing env vars value' if continue.downcase == 'n'
+    end
+  end
+
+  task :setup do
+    dotenv_contents = fetch(:dotenv_contents)
+
+    dotenv = StringIO.new
+    dotenv << dotenv_contents
+    dotenv.rewind
+
+    upload! dotenv, File.join(shared_path, '.env')
+  end
+
+  task :read do
+    env_file = fetch(:env_file)
+    dotenv_contents = ''
+
+    run_locally do
+      fail "You must have a #{env_file} file on your project " \
+           'to be able to deploy it' unless File.exist?(env_file)
+
+      if env_file.match(/\.gpg$/)
+        dotenv_contents = `bundle exec dotgpg cat #{env_file}`
+      else
+        dotenv_contents = `cat #{env_file}`
+      end
+    end
+
+    set :env_vars, dotenv_contents.split("\n").map { |var| var.split('=')[0] }
+    set :dotenv_contents, dotenv_contents
+  end
+
+  task :config do
+    set :optional_vars, ENV.fetch('OPTIONAL_VARS', [])
+    set :ignored_vars, ENV.fetch('IGNORED_VARS', [])
+    set :extensions, -> { ENV.fetch('OPTIONAL_VARS', []) }
+  end
+end
