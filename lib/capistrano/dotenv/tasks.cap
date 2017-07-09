@@ -5,7 +5,7 @@ namespace :dotenv do
     env_vars = fetch(:env_vars)
 
     OPTIONAL_VARS = fetch(:optional_env_vars, [])#%w(SEGMENT_KEY GTM_CODE RAILS_SERVE_STATIC_FILES ASSETS_VERSION)
-    IGNORED_VARS = %w(BUNDLE_GEMFILE DB_REAPING_FREQUENCY CI CIRCLE_ARTIFACTS COVERAGE FB_SECRET)
+    IGNORED_VARS = fetch(:ignored_env_vars, [])#%w(BUNDLE_GEMFILE DB_REAPING_FREQUENCY CI CIRCLE_ARTIFACTS COVERAGE FB_SECRET)
 
     missing_vars = []
     optional_vars = []
