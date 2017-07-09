@@ -1,6 +1,6 @@
 [![Gem Version](https://img.shields.io/gem/v/capistrano-dotenv.svg)](https://rubygems.org/gems/capistrano-dotenv)
-[![Dependencies](https://img.shields.io/gemnasium/ydkn/capistrano-dotenv.svg)](https://gemnasium.com/ydkn/capistrano-dotenv)
-[![Code Climate](https://img.shields.io/codeclimate/github/ydkn/capistrano-dotenv.svg)](https://codeclimate.com/github/ydkn/capistrano-dotenv)
+[![Dependencies](https://img.shields.io/gemnasium/jplethier/capistrano-dotenv.svg)](https://gemnasium.com/jplethier/capistrano-dotenv)
+[![Code Climate](https://img.shields.io/codeclimate/github/jplethier/capistrano-dotenv.svg)](https://codeclimate.com/github/jplethier/capistrano-dotenv)
 
 
 # Capistrano::Dotenv
