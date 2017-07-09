@@ -4,7 +4,7 @@ namespace :dotenv do
   task :check do
     env_vars = fetch(:env_vars)
 
-    OPTIONAL_VARS = %w(SEGMENT_KEY GTM_CODE RAILS_SERVE_STATIC_FILES ASSETS_VERSION)
+    OPTIONAL_VARS = fetch(:optional_env_vars, [])#%w(SEGMENT_KEY GTM_CODE RAILS_SERVE_STATIC_FILES ASSETS_VERSION)
     IGNORED_VARS = %w(BUNDLE_GEMFILE DB_REAPING_FREQUENCY CI CIRCLE_ARTIFACTS COVERAGE FB_SECRET)
 
     missing_vars = []
@@ -42,7 +42,7 @@ namespace :dotenv do
   end
 
   task :read do
-    env_file = fetch(:env_file)
+    env_file = fetch(:env_file, '.env')
     dotenv_contents = ''
 
     run_locally do
