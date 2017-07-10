@@ -9,7 +9,7 @@ namespace :dotenv do
 
     missing_vars = []
     optional_vars = []
-    EnvExtractor.extract_env_vars.each do |ocurrence|
+    EnvExtractor.new.extract_env_vars.each do |ocurrence|
       next if env_vars.include?(ocurrence[0])
       next if IGNORED_VARS.include?(ocurrence[0])
 
