@@ -71,6 +71,14 @@ There are project env vars needed only for test or development environment, so t
 set :ignored_env_vars, %w(IGNORED_VAR1 IGNORED_VAR2)
 ```
 
+### Roles
+
+By default, the setup task will upload generated .env file to all roles(:all), but you can define what roles to run this
+
+```ruby
+set :dotenv_roles, :app
+```
+
 
 ## Contributing
 

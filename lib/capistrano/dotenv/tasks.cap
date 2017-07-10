@@ -38,7 +38,9 @@ namespace :dotenv do
     dotenv << dotenv_contents
     dotenv.rewind
 
-    upload! dotenv, File.join(shared_path, '.env')
+    on roles(fetch(:dotenv_roles, :all) do
+      upload! dotenv, File.join(shared_path, '.env')
+    end
   end
 
   task :read do
@@ -58,11 +60,5 @@ namespace :dotenv do
 
     set :env_vars, dotenv_contents.split("\n").map { |var| var.split('=')[0] }
     set :dotenv_contents, dotenv_contents
-  end
-
-  task :config do
-    set :optional_vars, ENV.fetch('OPTIONAL_VARS', [])
-    set :ignored_vars, ENV.fetch('IGNORED_VARS', [])
-    set :extensions, -> { ENV.fetch('OPTIONAL_VARS', []) }
   end
 end
