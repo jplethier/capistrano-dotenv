@@ -38,7 +38,7 @@ namespace :dotenv do
     dotenv << dotenv_contents
     dotenv.rewind
 
-    on roles(fetch(:dotenv_roles, :all) do
+    on roles(fetch(:dotenv_roles, :all)) do
       upload! dotenv, File.join(shared_path, '.env')
     end
   end
