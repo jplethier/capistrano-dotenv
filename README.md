@@ -63,6 +63,12 @@ Or use the same file for every environment(default)
 set :env_file, '.env'
 ```
 
+If you use [dotgpg](https://github.com/ConradIrwin/dotgpg) to secure your env vars on git, just set the env_file passing the gpg file, and it will ask your gpg password and read it from gpg file correctly. For example:
+
+```ruby
+set :env_file, ".env_#{stage}.gpg"
+```
+
 ### Optional env vars
 
 There are env vars that you want to set only in some enviroments or you will use a default value if it is not defined, so it is not required to be set a value for them. To be able to run check without fail the deployment if those env vars do not have a value set, just set it as optional
