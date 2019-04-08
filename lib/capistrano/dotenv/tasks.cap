@@ -41,6 +41,12 @@ namespace :dotenv do
     end
   end
 
+  task :hook do
+    %w{gem rake ruby bundle}.each do |command|
+      SSHKit.config.command_map.prefix[command.to_sym].append('dotenv')
+    end
+  end
+
   task :read do
     env_file = fetch(:env_file, '.env')
     dotenv_contents = ''
