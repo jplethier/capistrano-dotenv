@@ -34,11 +34,9 @@ namespace :dotenv do
   task :setup do
     dotenv_contents = fetch(:dotenv_contents)
 
-    dotenv = StringIO.new
-    dotenv << dotenv_contents
-    dotenv.rewind
-
     on roles(fetch(:dotenv_roles, :all)) do
+      dotenv = StringIO.new(dotenv_contents)
+
       upload! dotenv, File.join(shared_path, '.env')
     end
   end
