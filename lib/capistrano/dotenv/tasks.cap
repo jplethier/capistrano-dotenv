@@ -42,8 +42,11 @@ namespace :dotenv do
   end
 
   task :hook do
-    %w{gem rake ruby bundle}.each do |command|
-      SSHKit.config.command_map.prefix[command.to_sym].append('dotenv')
+    commands = fetch(:dotenv_hook_commands, %w{gem rake ruby bundle})
+    hook_prefix = fetch(:dotenv_hook_prefix, 'dotenv')
+
+    commands.each do |command|
+      SSHKit.config.command_map.prefix[command.to_sym].append(hook_prefix)
     end
   end
 

@@ -47,6 +47,15 @@ invoke 'dotenv:read'
 invoke 'dotenv:setup'
 ```
 
+If you want to auto prefix `dotenv` to yout `bundle`/`ruby`/`gem`/`rake` commands, add `dotenv:hook` to your invokes.
+
+```ruby
+invoke 'dotenv:read'
+invoke 'dotenv:check'
+invoke 'dotenv:setup'
+invoke 'dotenv:hook'
+```
+
 ## Options
 
 ### Env file
@@ -91,6 +100,20 @@ By default, the setup task will upload generated .env file to all roles(:all), b
 
 ```ruby
 set :dotenv_roles, :app
+```
+
+### Hook
+
+By default, `dotenv:hook` will work on `bundle`, `ruby`, `gem` and `rake`. You can change this setting `dotenv_hook_commands`.
+
+```ruby
+set :dotenv_hook_commands, %w(bundle ruby gem rake my_custom_command)
+```
+
+By default, `dotenv:hook` will add the `dotenv` prefix before the commands. You can change this setting `dotenv_hook_prefix`.
+
+```ruby
+set :dotenv_hook_prefix, 'dotenv -f ".my_custom_env_file"'
 ```
 
 
